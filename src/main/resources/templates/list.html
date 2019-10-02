@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 align="center">Flight List</h1>
+<a href="/add">Add a Flight</a><br>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Beginning Airport</th>
+        <th>Ending Airport</th>
+        <th>Airline</th>
+        <th>Price</th>
+    </tr>
+    <tr th:each="flight : ${flights}">
+        <td th:text="${#dates.format(flight.date, 'MMM-dd-yyyy')}"></td>
+        <td th:text="${flight.beginAirport}"></td>
+        <td th:text="${flight.endAirport}"></td>
+        <td th:text="${flight.airline}"></td>
+        <td>$<span th:text="${#numbers.formatDecimal(flight.price, 0, 'COMMA', 2, 'POINT')}"></span></td>
+    </tr>
+</table>
+
+<form th:action="@{/searchlist}" method="post">
+    <input type="text" placeholder="Search.." name="search">
+    <button type="submit" >Search</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
