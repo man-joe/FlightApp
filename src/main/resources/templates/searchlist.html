@@ -1,29 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <meta charset="UTF-8">
-    <title>Title</title>
+<head th:replace="base :: head">
 </head>
 <body>
-<h2>Search list</h2>
-<div th:each="flight : ${flights}">
-    <p th:text="${flight.airline}"></p>
-    <p th:text="${#dates.format(flight.date, 'MM-dd-yyyy')}"></p>
-    <p th:text="${flight.price}"></p>
+<nav th:replace="base :: navBar"></nav>
+<h2 align="center">Search list</h2>
+
+<div class="card text-white bg-primary" style="width: 18rem;">
+    <div th:each="flight : ${flights}">
+        <div class="card-header" th:text="${flight.airline}">
+        </div>
+        <ul class="list-group list-group-flush list-group-item-primary">
+            <li class="list-group-item" th:text="${#dates.format(flight.date, 'MMM-dd-yyyy')}"></li>
+            <li class="list-group-item" th:text="${#numbers.formatDecimal(flight.price, 0, 'COMMA', 2, 'POINT')}"></li>
+        </ul>
+        <br>
+    </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+<footer th:replace="base :: footer"></footer>
+<div th:replace="base :: bootstrapScripts"></div>
 </body>
 </html>

@@ -34,7 +34,7 @@ public class HomeController {
             String pattern = "yyyy-MM-dd";
             System.out.println(date);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            String formattedDate = date.substring(1);
+            String formattedDate = date.substring(0);
             System.out.println("formatted: " + formattedDate);
             Date realDate = simpleDateFormat.parse(formattedDate);
             flight.setDate(realDate);
@@ -50,8 +50,25 @@ public class HomeController {
 
     @PostMapping("/searchlist")
     public String searchResult(Model model, @RequestParam(name="search") String search) {
-
-        model.addAttribute("flights", flightsRepository.findByAirlineIgnoreCase(search));
+        model.addAttribute("flights", flightsRepository.findByAirlineIgnoreCaseContaining(search));
         return "searchlist";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String updateFlight(@PathVariable("id") long id , Model model){
+        model.addAttribute("flight", flightsRepository.findById(id).get());
+        return "flightform";
+    }
+
+    @RequestMapping("/detail/{id}")
+    public String showFlight(@PathVariable("id") long id, Model model){
+        model.addAttribute("flight", flightsRepository.findById(id).get());
+        return "flightdetail";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delFlight(@PathVariable("id") long id) {
+        flightsRepository.deleteById(id);
+        return "redirect:/";
     }
 }
